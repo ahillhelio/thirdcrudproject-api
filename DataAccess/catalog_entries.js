@@ -25,9 +25,8 @@ const getEntry = () => {
                             console.log(docs);
                             resolve(docs);
                             client.close();
-                        }
-                        
-                 });    
+                        }        
+                });    
             }
         });
     });
