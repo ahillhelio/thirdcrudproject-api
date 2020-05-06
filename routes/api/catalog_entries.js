@@ -2,7 +2,7 @@ const express = require('express');
 const {createEntry} = require('../../DataAccess/catalog_entries');
 const {getEntry} = require('../../DataAccess/catalog_entries');
 //const {updateEntry} = require('../../DataAccess/catalog_entries');
-//const {deleteEntry} = require('../../DataAccess/catalog_entries');
+const {deleteEntry} = require('../../DataAccess/catalog_entries');
 const router = express.Router();
 
 
@@ -47,12 +47,11 @@ console.log(req.body);
    try {
          const data = await deleteEntry(req.params.id); 
          res.send(data);
-         
    } catch (err) {
             console.log(err);
             res.status(500).send  ("Error-Internal Server Issue. A total failure.");
-         };
+   };
 });
 
 
-  module.exports = router;
+module.exports = router;

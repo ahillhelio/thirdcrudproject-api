@@ -72,7 +72,7 @@ const deleteEntry = async (id) => {
                     if(err){
                         reject(err);
                     }else{
-                        resolve(DELETED);
+                        resolve(true);
                         client.close();
                     }
                 })
