@@ -1,7 +1,7 @@
 const express = require('express');
 const {createEntry} = require('../../DataAccess/catalog_entries');
 const {getEntry} = require('../../DataAccess/catalog_entries');
-//const {updateEntry} = require('../../DataAccess/catalog_entries');
+const {updateEntry} = require('../../DataAccess/catalog_entries');
 const {deleteEntry} = require('../../DataAccess/catalog_entries');
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.post('/', async function(req, res, next) {
          } catch (err) {
                console.log(err);
                res.status(500).send  ("Error-Internal Server Issue. A total failure.");
-    };
+         };
 });
 
 router.get('/', async function(req, res, next) {
@@ -35,7 +35,6 @@ router.put('/:id', async function(req, res, next) {
          try {
                const data = await updateEntry(req.params.id, req.body); 
                res.send(data);
-               
          } catch (err) {
                console.log(err);
                res.status(500).send  ("Error-Internal Server Issue. A total failure.");
@@ -43,7 +42,7 @@ router.put('/:id', async function(req, res, next) {
 });
 
 router.delete('/:id', async function(req, res, next) { 
-console.log(req.body);
+      console.log(req.body);
    try {
          const data = await deleteEntry(req.params.id); 
          res.send(data);

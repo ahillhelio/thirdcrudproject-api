@@ -58,6 +58,33 @@ const createEntry = (entry) => {
     return iou 
 }
 
+const updateEntry = (id, entry) => {
+    const iou = new Promise ((resolve, reject) => {
+        MongoClient.connect(url, settings, function (err, client){
+            if(err){
+                reject(err);
+            }else{
+                console.log("Connected to Server. Entry Updated.")
+                const db = client.db(dbName);
+                const collection = db.collection(colName);
+                collection.replaceOne({_id: ObjectID(id)},
+                    entry,
+                    {upsert:true},
+                    (err, result) => {
+                        if(err){
+                            reject(err);
+                        }else{
+                            resolve({updated_id:id});
+                            client.close();
+                        }
+                    }
+                );
+            }
+        })
+    })
+    return iou;
+}
+
 const deleteEntry = async (id) => {
     const iou = new Promise ((resolve, reject) => {
         MongoClient.connect(url, settings, async function (err, client) {
@@ -87,5 +114,6 @@ const deleteEntry = async (id) => {
 module.exports = {
     getEntry,
     createEntry,
+    updateEntry,
     deleteEntry
 };
