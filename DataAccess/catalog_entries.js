@@ -58,9 +58,34 @@ const createEntry = (entry) => {
     return iou 
 }
 
+const deleteEntry = async (id) => {
+    const iou = new Promise ((resolve, reject) => {
+        MongoClient.connect(url, settings, async function (err, client) {
+            if(err){
+                reject(err);
+            }else{
+                console.log("Connected to DB to DELETE Entry");
+                const db = client.db(dbName);
+                const collection = db.collection(colName);
+                console.log(collection)
+                collection.deleteMany({_id: ObjectID(id)}, (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(DELETED);
+                        client.close();
+                    }
+                })
+            }
+        })
+    })
+    return iou
+}
+    
 
 
 module.exports = {
     getEntry,
-    createEntry
+    createEntry,
+    deleteEntry
 };
